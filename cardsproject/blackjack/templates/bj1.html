@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}blackjack Cards{% endblock title %}
+{% block h1 %}blackjack Cards{% endblock %}
+
+{% block content %}
+    <div>
+        <p>ディーラーのカード</p>
+        <img src="{% static 'img/' %}{{ first_d_cards|first }}.png" alt="{{ first_d_cards|first }}" width="50">
+        <img src="{% static 'img/' %}裏面.png" alt="" width="50">
+    </div>
+    <div>
+        <p>プレイヤーのカード</p>
+        {% for p_card in first_p_cards %}
+            <img src="{% static 'img/' %}{{ p_card }}.png" alt="{{ p_card }}" width="50">
+        {% endfor %}
+        <p>{{ p_p }}ポイント</p>
+    </div>
+    <div>
+        <form method="post" action="{% url 'blackjack:bj2' %}" class="p-4 m-4 bg-light border border-success rounded form-group" width="100">
+            {% csrf_token %}
+            <label for="ex_acs">
+                特殊アクションを行いますか？
+            </label>
+            <select class="form-control" name="ex_acs">
+                {% for ex_ac in ex_acs %}
+                <option value={{ex_ac}}>{{ ex_ac }}</option>
+                {% endfor %}
+            </select>
+            <!-- <label for="bet_amount">賭け金を入力</label>
+            <input type="text" class="form-control" name="bet_amount"> -->
+            <button type="submit" class="btn btn-success mt-4">決定</button>
+        </form>
+    </div>
+{% endblock content %}

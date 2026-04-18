@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}blackjack Cards{% endblock title %}
+{% block h1 %}blackjack Cards{% endblock %}
+
+{% block content %}
+    <div>
+        <p>ディーラーのカード</p>
+        <img src="{% static 'img/' %}{{ dli|first }}.png" alt="{{ dli|first }}" width="50">
+        <img src="{% static 'img/' %}裏面.png" alt="" width="50">
+    </div>
+    <div>
+        {% if ex_turn_result.message %}
+            <p>{{ ex_turn_result.message }}</p>
+        {% endif %}
+        {% if ex_turn_result.ex_ac == 'no' or ex_turn_result.ex_ac == 'インシュアランス' or ex_turn_result.ex_ac == 'スプリッティングペアー' %}
+            <p>プレイヤーのカード</p>
+            {% if ex_turn_result.ex_ac == 'スプリッティングペアー' %}
+                {% for p_card in ex_turn_result.pli %}
+                    <img src="{% static 'img/' %}{{ p_card }}.png" alt="{{ p_card }}" width="50">
+                {% endfor %}
+            {% else %}
+                {% for p_card in pli %}
+                    <img src="{% static 'img/' %}{{ p_card }}.png" alt="{{ p_card }}" width="50">
+                {% endfor %}
+            {% endif %}
+            {% if ex_p_card %}
+                <span class="fs-3 fw-bold">+</span>
+                <p>EXドロー</p>
+                {% for ex_p_c in ex_p_cards %}
+                    <img src="{% static 'img/' %}{{ ex_p_c }}.png" alt="{{ ex_p_c }}" width="50">
+                {% endfor %}
+            {% endif %}
+            <p>{{ p_p }}ポイント</p>
+        {% endif %}
+    </div>
+    <div>
+        <form method="post" action="{% url 'blackjack:bj3' %}" class="p-4 m-4 bg-light border border-success rounded form-group" width="100">
+            {% csrf_token %}
+            <label>
+                ヒット or スタンド
+            </label>
+            {% for ac in acs %}
+                <button type="submit" class="btn btn-success mt-4" value='{{ ac }}' name="acs">{{ ac }}</button>
+                <!-- <option value={{ac}}>{{ ac }}</option> -->
+            {% endfor %}
+            <!-- <button type="submit" class="btn btn-success mt-4">決定</button> -->
+        </form>
+    </div>
+{% endblock content %}

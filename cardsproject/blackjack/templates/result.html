@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}blackjack Cards{% endblock title %}
+{% block h1 %}blackjack Cards{% endblock %}
+
+{% block content %}
+    <h4>{{ result1.result }}</h4>
+    <div>
+        <p>ディーラーのカード</p>
+        {% for d_card in dli %}
+            <img src="{% static 'img/' %}{{ d_card }}.png" alt="{{ d_card }}" width="50">
+        {% endfor %}
+        {% for ex_d_card in result1.ex_d_card %}
+            <span class="fs-3 fw-bold">+</span>
+            <p>EXドロー</p>
+            <img src="{% static 'img/' %}{{ ex_d_card }}.png" alt="{{ ex_d_card }}" width="50">
+        {% endfor %}
+        <p>{{ result1.dp }}ポイント</p>
+    </div>
+    <div>
+        {% if ex_ac == 'スプリッティングペアー' %}
+
+        {% endif %}
+        <p>プレイヤーのカード</p>
+        {% for p_card in pli %}
+            <img src="{% static 'img/' %}{{ p_card }}.png" alt="{{ p_card }}" width="50">
+        {% endfor %}
+        <p>{{ result1.pp }}ポイント</p>
+    </div>
+    <h4>{{ result2.result }}</h4>
+    <!-- <form method="post" action="{% url 'blackjack:home' %}" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success mt-4">homeに戻る</button>
+    </form> -->
+    <div>
+        <a href="{% url 'blackjack:home' %}" class="btn btn-success btn-lg">Homeに戻る</a>
+    </div>
+{% endblock content %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}baccara Cards{% endblock title %}
+{% block h1 %}baccara Cards{% endblock %}
+
+{% block content %}
+    <div class="d-flex align-items-center">
+        <div class="d-flex gap-2">
+            <form method="post" action="{% url 'baccara:home' %}" class="p-4 m-4 bg-light border border-success rounded form-group" width="100">
+                {% csrf_token %}
+                <label for="bet_on">
+                    何に賭けますか？
+                </label>
+                <select class="form-control" name="bet_on">
+                    <option value="banker" selected>バンカー</option>
+                    <option value="player">プレイヤー</option>
+                    <option value="tie">引き分け</option>
+                </select>
+                {% if error_mes %}
+                    <p>{{ error_mes }}</p>
+                {% endif %}
+                <label for="bet_amount">賭け金</label>
+                <input type="text" class="form-control" name="bet_amount">
+                <button type="submit" class="btn btn-success mt-4">決定</button>
+            </form>
+            
+        </div>
+        <div>
+            <div class="d-flex gap-2 overflow-auto" style="max-width: 100%;">
+                {% for item in roadmap_data %}
+                    <div class="text-center">
+                        {% for i in "x"|ljust:item.count %}
+                            <div style="font-size: 2rem; position: relative;">
+                                {{ item.symbol }}
+
+                                {% if forloop.counter in item.tie_positions %}
+                                    <br>
+                                    <p style="color: green;">╱</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% empty %}
+                    <p class="text-muted">データ無し</p>
+                {% endfor %}
+            </div>
+            <div class="mt-3">
+                <span>🔴 バンカー</span>
+                <span>🔵 プレイヤー</span>
+                <span style="color: green;">╱ 引き分け</span>
+            </div>
+        </div>
+    </div>
+    {% if bet_amount %}
+        <div class="d-flex align-items-center">
+            <div class="d-flex gap-2">
+                <!-- <h6>バンカー</h6> -->
+                <div class="p-4 m-4 bg-light border border-success rounded form-group">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex gap-2">
+                            <p>バンカーのカード</p>
+                            {% for b_card in first_b_cards %}
+                                <img src="{% static 'img/' %}{{ b_card }}.png" alt="{{ b_card }}" width="50">
+                            {% endfor %}
+                        </div>
+                    {% if ex_drow.b_card %}
+                        <span class="fs-3 fw-bold">+</span>
+                        <p>EXドロー</p>
+                        <img src="{% static 'img/' %}{{ ex_drow.b_card }}.png" alt="{{ ex_drow.b_card }}" width="50">
+                    {% endif %}
+                    </div>
+                    <p class="mt-3 mb-0">
+                        {% if ex_drow.b_card %}
+                            {{ b_sum }}ポイント → {{ b_sum2 }}ポイント
+                        {% else %}
+                            {{ b_sum }}ポイント
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <!-- <h6>プレイヤー</h6> -->
+                <div class="p-4 m-4 bg-light border border-success rounded form-group">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex gap-2">
+                            <p>プレイヤーのカード</p>
+                            {% for p_card in first_p_cards %}
+                                <img src="{% static 'img/' %}{{ p_card }}.png" alt="{{ p_card }}" width="50">
+                            {% endfor %}
+                        </div>
+                        {% if ex_drow.p_card %}
+                            <span class="fs-3 fw-bold">+</span>
+                            <p>EXドロー</p>
+                            <img src="{% static 'img/' %}{{ ex_drow.p_card }}.png" alt="{{ ex_drow.p_card }}" width="50">
+                        {% endif %}
+                    </div>
+                    <p class="mt-3 mb-0">
+                        {% if ex_drow.p_card %}
+                            {{ p_sum }}ポイント → {{ p_sum2 }}ポイント
+                        {% else %}
+                            {{ p_sum }}ポイント
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <h2>勝者：{{ winner }}</h2>
+        <p>あなたの{{ result }}</p>
+
+        <br><br><br>
+
+    {% endif %}
+
+{% endblock content %}
