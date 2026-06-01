@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.index_view, name='index'),
     path('baccara/',include('baccara.urls')),
     path('blackjack/',include('blackjack.urls')),
+    path('poker/',include('poker.urls')),
 ]

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}blackjack Cards{% endblock title %}
+{% block h1 %}blackjack Cards{% endblock h1 %}
+
+{% block content %}
+    <div>
+        <form method="post" action="{% url 'poker:home' %}" class="p-4 m-4 bg-light border border-success rounded form-group" width="100">
+            {% csrf_token %}
+            {% if error_mes %}
+                <p>{{ error_mes }}</p>
+            {% endif %}
+            <label for="mem_amount">人数を入力</label>
+            <input type="text" class="form-control" name="mem_amount">
+            <button type="submit" class="btn btn-success mt-4">決定</button>
+        </form>
+    </div>
+{% endblock content %}

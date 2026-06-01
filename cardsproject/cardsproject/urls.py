@@ -8,6 +8,7 @@ urlpatterns = [
     path('',include('cards.urls')),
     path('baccara/',include('baccara.urls')),
     path('blackjack/',include('blackjack.urls')),
+    path('poker/',include('poker.urls')),
     path('accounts/',include('accounts.urls')),
     # path('cards/',include('cards.urls')),
 ]
