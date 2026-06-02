@@ -4,9 +4,11 @@ from cards_all.card import Trump_card
 from cards_all.baccara import Baccara
 from accounts.utils import update_user_money, can_bet
 from .utils import get_roadmap_display,update_roadmap
+from django.contrib.auth.decorators import login_required
 # from baccara import Baccara
 # Create your views here.
 
+@login_required
 def baccara_view(request):
     bet_amount = None
     bet_on = None
