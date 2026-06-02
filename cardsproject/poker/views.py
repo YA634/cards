@@ -4,8 +4,10 @@ from cards_all.card import Trump_card
 from cards_all.poker import Poker
 from accounts.utils import update_user_money, can_bet
 import copy
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def poker_view(request):
     request.session['process_end'] = 0
     mem_amount = 0

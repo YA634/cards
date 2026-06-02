@@ -4,8 +4,10 @@ from cards_all.card import Trump_card
 from cards_all.blackjack import Blackjack
 from accounts.utils import update_user_money, can_bet
 import copy
+from django.contrib.auth.decorators import login_required
 # from .utils import get_roadmap_display,update_roadmap
 
+@login_required
 def blackjack_view(request):
     request.session['process_end'] = 0
     bet_amount = 0
