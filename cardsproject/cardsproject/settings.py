@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p+=!r@l&j+oe8lv(1a9ac@p7kzzrio@&xq_8@b1r+cqvhddp$0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cards-app-6tfq.onrender.com']
 
 
 # Application definition
