@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin , BaseUserManager
+from django.utils import timezone
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -31,6 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     money = models.IntegerField(default=100, verbose_name='所持金')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now) 
     
     objects = CustomUserManager()
     
