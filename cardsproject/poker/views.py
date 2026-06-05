@@ -23,7 +23,8 @@ def poker_view(request):
       request.session['mem_amount'] = mem_amount
       # return redirect('poker:pk1')
 
-    return render(request,'poker_home.html',{'mem_amount':mem_amount,'error_mes':error_mes})
+    # return render(request,'poker_home.html',{'mem_amount':mem_amount,'error_mes':error_mes})
+    return render(request, 'mikan.html')
 
 def pk1_view(request):
    return render()
